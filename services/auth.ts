@@ -8,6 +8,8 @@ export const login = async ({ username, password }: { username: string, password
     }>("/auth/login", {
         username,
         password,
+    }, {
+        withCredentials: true,
     })
 
     if (response.status !== 200) {
