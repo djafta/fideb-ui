@@ -1,47 +1,89 @@
+'use client'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function SignInForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
-  return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
-      <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Entrar na sua conta</h1>
-        <p className="text-muted-foreground text-sm text-balance">
-          Introduza suas credências para entrar
-        </p>
-      </div>
-      <div className="grid gap-6">
-        <div className="grid gap-3">
-          <Label htmlFor="username">Nome de usuário</Label>
-          <Input id="username" type="text" placeholder="asaranga" required />
-        </div>
-        <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Palavra passe</Label>
-            <a
-              href="#"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
-            >
-              Esqueceu a sua palavra passe?
-            </a>
-          </div>
-          <Input id="password" type="password" required />
-        </div>
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-      </div>
-      <div className="text-center text-sm">
-        Não tem conta?{" "}
-        <a href="#" className="underline underline-offset-4">
-          Criar
-        </a>
-      </div>
-    </form>
-  )
+                               className,
+                               ...props
+                           }: React.ComponentProps<"form">) {
+
+    const { signIn } = useAuth();
+    const router = useRouter();
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const target = event.currentTarget;
+
+        if (!(target instanceof HTMLFormElement)) {
+            console.error("Expected target to be an HTMLFormElement");
+            return;
+        }
+
+        const username = target.username.value;
+        const password = target.password.value;
+
+        signIn.mutate(
+            {
+                username,
+                password,
+            },
+            {
+                onError: (err) => {
+                    target.reset();
+                    console.error("Error during sign-in:", err);
+                    toast("Erro ao entrar", {
+                        description: `Algum erro ocorreu ao tentar entrar na sua conta. Verifique suas credências e tente novamente. detalhes do erro: ${ err.message }`,
+                        variant: "destructive",
+                        duration: 5000,
+                        action: {
+                            label: "Ok",
+                        }
+                    });
+                }
+            }
+        )
+    }
+
+    return (
+        <form className={ cn("flex flex-col gap-6", className) } { ...props } onSubmit={ handleSubmit }>
+            <div className="flex flex-col items-center gap-2 text-center">
+                <h1 className="text-2xl font-bold">Entrar na sua conta</h1>
+                <p className="text-muted-foreground text-sm text-balance">
+                    Introduza suas credências para entrar
+                </p>
+            </div>
+            <div className="grid gap-6">
+                <div className="grid gap-3">
+                    <Label htmlFor="username">Nome de usuário</Label>
+                    <Input id="username" name={ "username" } type="text" placeholder="jbalate" required/>
+                </div>
+                <div className="grid gap-3">
+                    <div className="flex items-center">
+                        <Label htmlFor="password">Palavra passe</Label>
+                        <a
+                            href="#"
+                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                        >
+                            Esqueceu a sua palavra passe?
+                        </a>
+                    </div>
+                    <Input id="password" type="password" name={ "password" } required/>
+                </div>
+                <Button type="submit" className="w-full">
+                    Login
+                </Button>
+            </div>
+            <div className="text-center text-sm">
+                Não tem conta?{ " " }
+                <a href="#" className="underline underline-offset-4">
+                    Criar
+                </a>
+            </div>
+        </form>
+    )
 }
