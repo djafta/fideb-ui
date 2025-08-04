@@ -44,6 +44,19 @@ export function SignInForm({
                             label: "Ok",
                         }
                     })
+                },
+                onSuccess: (data) => {
+                    target.reset();
+                    console.log("Sign-in successful:", data);
+                    toast("Sucesso", {
+                        description: "Você entrou com sucesso na sua conta.",
+                        variant: "success",
+                        duration: 5000,
+                        action: {
+                            label: "Ok",
+                        }
+                    })
+                    router.push("/dashboard");
                 }
             }
         )
