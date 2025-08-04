@@ -1,0 +1,78 @@
+{
+	"financeiras": [
+		{
+			"id": "imposto-selo",
+			"title": "Imposto de Selo",
+			"value": "0.2%",
+			"description": "Taxa aplicada sobre determinadas operações financeiras.",
+			"notes": "Configure conforme a legislação vigente."
+		},
+		{
+			"id": "comissao-transferencia-min",
+			"title": "Comissão de Transferência (Mínima)",
+			"value": "1.00 MZN",
+			"description": "Valor mínimo cobrado por transação.",
+			"notes": "Pode variar por canal ou tipo de cliente."
+		},
+		{
+			"id": "comissao-transferencia-max",
+			"title": "Comissão de Transferência (Máxima)",
+			"value": "50.00 MZN",
+			"description": "Valor máximo permitido para comissão por transação.",
+			"notes": "Use '0' para indicar que não há limite máximo."
+		},
+		{
+			"id": "componente-cedsif",
+			"title": "Componente CEDSIF",
+			"value": "v3.5.2",
+			"description": "Versão do componente para comunicação com o CEDSIF.",
+			"notes": "Utilizado para integração com sistemas fiscais moçambicanos."
+		}
+	],
+	"infraestrutura": [
+		{
+			"id": "biblioteca-dados",
+			"title": "Biblioteca de Dados",
+			"value": "https://api.biblioteca.gov.mz/v1/",
+			"description": "Endpoint base da biblioteca nacional de dados e referência.",
+			"notes": "Utilizada para validação de documentos e registros públicos."
+		},
+		{
+			"id": "servidor-core",
+			"title": "Servidor do Core Bancário",
+			"value": "https://core.aervel-infra.net",
+			"description": "URL principal do sistema bancário central.",
+			"notes": "Certifique-se de que está acessível 24/7 com latência mínima."
+		},
+		{
+			"id": "intervalo-envio-pedidos",
+			"title": "Intervalo de Envio de Pedidos",
+			"value": "5s",
+			"description": "Tempo de espera entre cada requisição enviada ao core.",
+			"notes": "Evite sobrecarga e bloqueios por flood."
+		}
+	],
+	"aparencia": [
+		{
+			"id": "cor-fundo",
+			"title": "Cor de Fundo",
+			"value": "#FFFFFF",
+			"description": "Cor de fundo padrão da aplicação.",
+			"notes": "Utilize cores acessíveis e que respeitem a identidade visual."
+		},
+		{
+			"id": "cor-texto",
+			"title": "Cor do Texto",
+			"value": "#000000",
+			"description": "Cor padrão do texto exibido na aplicação.",
+			"notes": "Escolha uma cor que contraste bem com o fundo."
+		},
+		{
+			"id": "tamanho-fonte",
+			"title": "Tamanho da Fonte",
+			"value": "16px",
+			"description": "Tamanho padrão da fonte utilizada na aplicação.",
+			"notes": "Considere a legibilidade em diferentes dispositivos."
+		}
+	]
+}
