@@ -10,7 +10,12 @@ import { useDiscounts } from "@/hooks/use-discounts";
 
 export default function Page({ params }: { params: Promise<{ situation: string }> }) {
     const { situation } = use(params);
-    const { discounts } = useDiscounts(0, 100, situation);
+    const { discounts, pagination } = useDiscounts(0, 100, situation);
+
+    console.log({
+        discounts,
+        pagination
+    })
 
     const customColumns: ColumnDef<z.infer<typeof schema>>[] = [
         {
