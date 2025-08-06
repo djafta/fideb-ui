@@ -71,7 +71,7 @@ const data = {
                 },
                 {
                     title: "Cancelados",
-                    url: "/discounts/canceled",
+                    url: "/discounts/cancelled",
                 },
                 {
                     title: "Com erro do banco",

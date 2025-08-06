@@ -1,22 +1,16 @@
 'use client'
 import { DataTable, schema } from "@/components/data-table";
-import { use, useEffect, useState } from "react";
+import { use } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { Badge } from "@/components/ui/badge";
 import { z } from "zod";
-import { getDiscounts } from "@/services/discounts";
+import { useDiscounts } from "@/hooks/use-discounts";
 
 export default function Page({ params }: { params: Promise<{ situation: string }> }) {
     const { situation } = use(params);
-    const [data, setData] = useState<any[]>([]);
-
-    useEffect( () => {
-        getDiscounts(0, 100, situation)?.then(response =>{
-            setData(response.data);
-        })
-    }, [setData]);
+    const { discounts } = useDiscounts(0, 100, situation);
 
     const customColumns: ColumnDef<z.infer<typeof schema>>[] = [
         {
@@ -73,7 +67,7 @@ export default function Page({ params }: { params: Promise<{ situation: string }
     return (
         <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                <DataTable columns={ customColumns } data={ data }/>
+                <DataTable columns={ customColumns } data={ discounts }/>
             </div>
         </div>
     )
