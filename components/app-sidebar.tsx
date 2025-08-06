@@ -67,19 +67,19 @@ const data = {
             items: [
                 {
                     title: "Fixados",
-                    url: "#",
+                    url: "/discounts/fixed",
                 },
                 {
                     title: "Cancelados",
-                    url: "#",
+                    url: "/discounts/canceled",
                 },
                 {
                     title: "Com erro do banco",
-                    url: "#",
+                    url: "/discounts/pending_action",
                 },
                 {
                     title: "Pendentes",
-                    url: "#",
+                    url: "/discounts/pending",
                 },
             ],
         },
