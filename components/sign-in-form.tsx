@@ -38,11 +38,7 @@ export function SignInForm({
                     console.error("Error during sign-in:", err);
                     toast("Erro ao entrar", {
                         description: `Algum erro ocorreu ao tentar entrar na sua conta. Verifique suas credências e tente novamente. detalhes do erro: ${ err.message }`,
-                        variant: "destructive",
                         duration: 5000,
-                        action: {
-                            label: "Ok",
-                        }
                     })
                 },
                 onSuccess: (data) => {
@@ -50,11 +46,7 @@ export function SignInForm({
                     console.log("Sign-in successful:", data);
                     toast("Sucesso", {
                         description: "Você entrou com sucesso na sua conta.",
-                        variant: "success",
                         duration: 5000,
-                        action: {
-                            label: "Ok",
-                        }
                     })
                     router.push("/dashboard");
                 }
