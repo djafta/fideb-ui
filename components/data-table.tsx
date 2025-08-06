@@ -68,16 +68,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CheckedState } from "@radix-ui/react-checkbox"
 
 export const schema = z.object({
-    id: z.number(),
-    branch: z.number(),
+    id: z.string(),
+    branch: z.string(),
     manager: z.string(),
     entity: z.string(),
     client: z.string(),
     organization: z.string(),
-    nuit: z.number(),
+    nuit: z.string(),
     reference: z.string(),
-    value: z.number(),
-    status: z.enum(["Pendente", "Fixado"]).or(z.unknown()),
+    value: z.string(),
+    status: z.string(),
 })
 
 // Create a separate component for the drag handle
