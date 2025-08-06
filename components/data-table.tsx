@@ -68,7 +68,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CheckedState } from "@radix-ui/react-checkbox"
 
 export const schema = z.object({
-    id: z.string(),
     branch: z.string(),
     manager: z.string(),
     entity: z.string(),
@@ -102,7 +101,7 @@ function DragHandle({ id }: { id: number }) {
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
     const { transform, transition, setNodeRef, isDragging } = useSortable({
-        id: row.original.id,
+        id: row.original.reference,
     })
 
     return (
@@ -142,7 +141,7 @@ export function DataTable({ data: initialData, columns }: { data: z.infer<typeof
         useSensor(KeyboardSensor, {})
     )
 
-    const dataIds = React.useMemo<UniqueIdentifier[]>(() => data?.map(({ id }) => id) || [], [data])
+    const dataIds = React.useMemo<UniqueIdentifier[]>(() => data?.map(({ reference }) => reference) || [], [data])
 
     const table = useReactTable({
         data,
@@ -154,7 +153,7 @@ export function DataTable({ data: initialData, columns }: { data: z.infer<typeof
             columnFilters,
             pagination,
         },
-        getRowId: (row) => row.id.toString(),
+        getRowId: (row) => row.reference.toString(),
         enableRowSelection: true,
         onRowSelectionChange: setRowSelection,
         onSortingChange: setSorting,
