@@ -9,4 +9,10 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=80
+    networks:
+      - fideb
     restart: unless-stopped
+
+networks:
+  fideb:
+    external: true
