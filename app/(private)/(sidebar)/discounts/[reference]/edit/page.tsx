@@ -26,8 +26,6 @@ export default function Page({ params }: { params: Promise<{ reference: string }
 
   const discount = discounts[0];
 
-  console.log(discount)
-
   useEffect(() => {
     if (discount)
       setPayload(() => ({
@@ -64,10 +62,16 @@ export default function Page({ params }: { params: Promise<{ reference: string }
                       <Label className={ "flex justify-center" } htmlFor={ "endDateInput" }>Data Fim</Label>
                       <MonthYearSelect
                         onValueChange={ (value) => {
-                          setPayload(prevState => ({
-                            ...prevState,
-                            endDate: value.toISOString().split("T")[0]
-                          }))
+                          setPayload(prevState => {
+                            if (prevState) {
+                              return {
+                                ...prevState,
+                                endDate: value.toISOString().split("T")[0]
+                              }
+                            }
+
+                            throw new Error("Invalid state");
+                          })
                         } }
                         value={ new Date(payload.endDate) }
                       />

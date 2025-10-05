@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getBearerToken } from "@/lib/server/utils";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const authorization = await getBearerToken();
 
   if (!authorization) {

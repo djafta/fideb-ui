@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const FIDEB_API_URL = process.env.FIDEB_API_URL;
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE() {
 
     const response = await fetch(`${ FIDEB_API_URL }/auth/logout`, {
         method: "DELETE",

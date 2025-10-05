@@ -138,7 +138,7 @@ export function DataTable({
         <Table>
           <TableHeader className={ "sticky top-0 bg-white z-10" }>
             <TableRow>
-              { columns.filter(column => state.columns.includes(column.key)).map((column, index) => (
+              { columns.filter(column => state.columns.includes(column.key)).map((column) => (
                 <TableHead key={ column.key } className="cursor-pointer">
                   {
                     column.formatHeader ? column.formatHeader(column.name) : column.name

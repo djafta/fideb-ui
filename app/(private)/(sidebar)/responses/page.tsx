@@ -205,7 +205,7 @@ export default function Page() {
         <Button onClick={ () => {
           setSelectedResponse(value);
           setIsDialogOpen(true);
-        } } variant={ "ghost" }><Eye className={"stroke-red-500"}/></Button>
+        } } variant={ "ghost" }><Eye className={ "stroke-red-500" }/></Button>
       </div>
     )
   }
@@ -219,8 +219,8 @@ export default function Page() {
       </div>
     ),
     formatData: (value: string) => (
-      <Badge variant={"outline"}>
-        {value}
+      <Badge variant={ "outline" }>
+        { value }
       </Badge>
     )
   }
@@ -239,7 +239,7 @@ export default function Page() {
             id: response.request.businessCode + index,
             operation: response.request.operation,
             businessCode: response.request.businessCode,
-            status: response.payload.status,
+            status: response.request.status,
             actions: response
           })) }
           pagination={ pagination }

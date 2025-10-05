@@ -66,11 +66,6 @@ export function ResponseInfoCard({ data }: ResponseInfoCardProps) {
   }
   const { request, payload, statusCode } = data
 
-  // Format date
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR")
-  }
-
   // Get status info
   const getStatusInfo = (status: string) => {
     switch (status) {
@@ -99,7 +94,6 @@ export function ResponseInfoCard({ data }: ResponseInfoCardProps) {
   }
 
   const statusInfo = getStatusInfo(payload.status)
-  const StatusIcon = statusInfo.icon
 
   return (
     <Card className="w-full">

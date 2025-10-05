@@ -78,7 +78,7 @@ const mockEvents = [
 
 export default function HomePage({ params }: { params: Promise<{ reference: string }> }) {
   const { reference } = use(params);
-  const { discounts, isLoading } = useDiscounts(0, 1, undefined, `reference=${ reference }`);
+  const { discounts } = useDiscounts(0, 1, undefined, `reference=${ reference }`);
 
   const discount = discounts[0];
 

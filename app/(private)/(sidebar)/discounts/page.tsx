@@ -245,7 +245,7 @@ export default function Page() {
                     setLoadingDiscounts((prevState) => [...prevState, value.reference])
                     resendDiscount(value.reference)
                       .then((response) => {
-                        response.status === 200 && refetch();
+                        if (response.status === 200) refetch();
                       })
                       .finally(() => {
                         setLoadingDiscounts((prevState) => prevState.filter((discountReference) => discountReference !== value.reference))
@@ -269,7 +269,7 @@ export default function Page() {
         <DataTable
           height={ "max-h-[calc(100vh-220px)]" }
           columns={
-            // @ts-ignore
+            // @ts-expect-error Properties missing in the type 'Column<Discount>[]' but required in type 'Column<Discount>[]'.
             columns.concat(situation ? [] : [situationColumn]).concat(actionsColumn)
           }
           data={ discounts.map((discount) => ({

@@ -4,9 +4,10 @@ import { SettingCard } from "@/components/setting-card";
 import { useSettings } from "@/hooks/use-settings";
 import { Setting } from "@/services/settings";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function AllSettings() {
-  const { settings, isLoading, mutation } = useSettings();
+  const { settings, mutation } = useSettings();
 
   async function handleUpdate(updatedSetting: Setting) {
     mutation.mutate(updatedSetting);
@@ -14,7 +15,7 @@ export default function AllSettings() {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-
+      toast.success("Configuração actualizada com sucesso");
     }
   }, [mutation])
 

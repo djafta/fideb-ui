@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getBearerToken } from "@/lib/server/utils";
 
 const FIDEB_API_URL = process.env.FIDEB_API_URL;
 
-export async function GET(request: NextRequest) {
+export async function GET() {
 
     const authorization = await getBearerToken();
 

@@ -9,7 +9,7 @@ export default function Page() {
 
   useEffect(() => {
     router.push("/sign-in");
-  }, []);
+  }, [router]);
 
   return (
     <div className={ "w-screen h-screen flex items-center justify-center" }>

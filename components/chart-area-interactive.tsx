@@ -32,7 +32,7 @@ const chartConfig = {
 export function ChartAreaInteractive() {
   const isMobile = useIsMobile()
   const [timeRange, setTimeRange] = React.useState("30d")
-  const { data, isLoading } = useSeries();
+  const { data } = useSeries();
 
   React.useEffect(() => {
     if (isMobile) {

@@ -12,7 +12,7 @@ export default function SignOutPage() {
   useEffect(() => {
     signOut.mutate();
     localStorage.removeItem("fideb-auth-token")
-  }, []);
+  }, [signOut]);
 
   if (signOut.isError || signOut.isSuccess) {
     setTimeout(() => {

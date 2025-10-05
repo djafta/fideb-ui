@@ -16,6 +16,7 @@ export type Discounts = {
     situation: string;
     startDate: string;
     updatedAt: Date;
+    fixedAt: Date | null
   }[];
   pagination: {
     page: number;

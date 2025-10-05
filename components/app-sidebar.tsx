@@ -1,10 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { BadgePercent, BookOpen, FileText, Frame, LogOut, Map, PieChart, Settings2, } from "lucide-react"
+import { BadgePercent, BookOpen, FileText, LogOut, Settings2, } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, } from "@/components/ui/sidebar"
 import settings from "@/lib/data/settings.json";

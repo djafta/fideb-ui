@@ -32,6 +32,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<"form">
             {
                 onError: (err) => {
                     target.reset();
+                    console.error(err);
                 },
                 onSuccess: (data) => {
                     target.reset();
