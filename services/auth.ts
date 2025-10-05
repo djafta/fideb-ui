@@ -5,11 +5,9 @@ export const login = async ({ username, password }: { username: string, password
         data: {
             token: string
         }
-    }>("/auth/login", {
+    }>("/auth/sign-in", {
         username,
         password,
-    }, {
-        withCredentials: true,
     })
 
     if (response.status !== 200) {
@@ -17,4 +15,16 @@ export const login = async ({ username, password }: { username: string, password
     }
 
     return response.data.data;
+}
+
+export const logout = async () => {
+    const response = await api.delete<{
+        data: {
+            token: string
+        }
+    }>("/auth/sign-out")
+
+    if (response.status !== 204) {
+        throw new Error("Failed to sign out");
+    }
 }

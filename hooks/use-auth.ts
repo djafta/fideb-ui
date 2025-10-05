@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { login } from "@/services/auth";
+import { login, logout  } from "@/services/auth";
 
 type SignInData = {
     username: string;
@@ -10,17 +10,18 @@ export function useAuth() {
 
     const signIn = useMutation({
         mutationFn: (data: SignInData) => {
-            try {
-                return login(data)
-            } catch (error) {
-                return {
-                    error
-                }
-            }
+            return login(data)
+        }
+    })
+
+    const signOut = useMutation({
+        mutationFn: () => {
+            return logout();
         }
     })
 
     return {
         signIn,
+        signOut
     }
 }

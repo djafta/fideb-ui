@@ -1,362 +1,256 @@
-"use client"
-
-import * as React from "react"
+'use client'
+import * as React from "react";
+import { useState } from "react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
-    closestCenter,
-    DndContext,
-    type DragEndEvent,
-    KeyboardSensor,
-    MouseSensor,
-    TouchSensor,
-    type UniqueIdentifier,
-    useSensor,
-    useSensors,
-} from "@dnd-kit/core"
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers"
-import {
-    arrayMove,
-    SortableContext,
-    useSortable,
-    verticalListSortingStrategy,
-} from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import {
-    ColumnDef,
-    ColumnFiltersState,
-    flexRender,
-    getCoreRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    Row,
-    SortingState,
-    useReactTable,
-    VisibilityState,
-} from "@tanstack/react-table"
-import {
-    CheckCircle2Icon,
-    ChevronDownIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    ChevronsLeftIcon,
-    ChevronsRightIcon,
-    ColumnsIcon,
-    GripVerticalIcon,
-    LoaderIcon,
-    MoreVerticalIcon,
-    PlusIcon,
-} from "lucide-react"
-import { z } from "zod"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { FilterForm } from "@/components/filter-form";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CheckedState } from "@radix-ui/react-checkbox"
-
-export const schema = z.object({
-    branch: z.string(),
-    manager: z.string(),
-    entity: z.string(),
-    client: z.string(),
-    organization: z.string(),
-    nuit: z.string(),
-    reference: z.string(),
-    value: z.string(),
-    status: z.string(),
-})
-
-// Create a separate component for the drag handle
-function DragHandle({ id }: { id: number }) {
-    const { attributes, listeners } = useSortable({
-        id,
-    })
-
-    return (
-        <Button
-            {...attributes}
-            {...listeners}
-            variant="ghost"
-            size="icon"
-            className="size-7 text-muted-foreground hover:bg-transparent"
-        >
-            <GripVerticalIcon className="size-3 text-muted-foreground" />
-            <span className="sr-only">Drag to reorder</span>
-        </Button>
-    )
+interface Column {
+  name: string;
+  key: string;
+  formatData?: (value: any) => React.ReactNode;
+  formatHeader?: (name: string) => React.ReactNode;
 }
 
-function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
-    const { transform, transition, setNodeRef, isDragging } = useSortable({
-        id: row.original.reference,
-    })
-
-    return (
-        <TableRow
-            data-state={row.getIsSelected() && "selected"}
-            data-dragging={isDragging}
-            ref={setNodeRef}
-            className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-            style={{
-                transform: CSS.Transform.toString(transform),
-                transition: transition,
-            }}
-        >
-            {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-            ))}
-        </TableRow>
-    )
+interface Pagination {
+  page: number;
+  size: number;
+  total: number;
 }
 
-export function DataTable({ data: initialData, columns }: { data: z.infer<typeof schema>[]; columns: ColumnDef<z.infer<typeof schema>>[] }) {
-    const [data, setData] = React.useState(() => initialData)
-    const [rowSelection, setRowSelection] = React.useState({})
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [pagination, setPagination] = React.useState({
-        pageIndex: 0,
-        pageSize: 10,
-    })
-    const sortableId = React.useId()
-    const sensors = useSensors(
-        useSensor(MouseSensor, {}),
-        useSensor(TouchSensor, {}),
-        useSensor(KeyboardSensor, {})
-    )
+interface DataTableProps {
+  height?: string;
+  columns: Column[];
+  data: any[];
+  pagination: Pagination;
+  isLoading: boolean;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+  onColumnsChange: (columns: string[]) => void;
+  onFilterChange?: (filter: string) => void;
+  initialPageSize?: number;
+  initialColumns?: string[];
+}
 
-    const dataIds = React.useMemo<UniqueIdentifier[]>(() => data?.map(({ reference }) => reference) || [], [data])
+export function DataTable({
+                            height,
+                            columns,
+                            data,
+                            pagination,
+                            isLoading,
+                            onPageChange,
+                            onPageSizeChange,
+                            onColumnsChange,
+                            onFilterChange,
+                            initialPageSize = 15,
+                            initialColumns
+                          }: DataTableProps) {
+  const [state, setState] = useState({
+    page: 0,
+    size: initialPageSize,
+    columns: initialColumns || columns.map((column) => column.key),
+    filter: ""
+  });
 
-    const table = useReactTable({
-        data,
-        columns, // Use the columns prop directly
-        state: {
-            sorting,
-            columnVisibility,
-            rowSelection,
-            columnFilters,
-            pagination,
-        },
-        getRowId: (row) => row.reference.toString(),
-        enableRowSelection: true,
-        onRowSelectionChange: setRowSelection,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        onColumnVisibilityChange: setColumnVisibility,
-        onPaginationChange: setPagination,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFacetedRowModel: getFacetedRowModel(),
-        getFacetedUniqueValues: getFacetedUniqueValues(),
-    })
+  const goNextPage = () => {
+    const newPage = state.page + 1;
+    setState((prev) => ({ ...prev, page: newPage }));
+    onPageChange(newPage);
+  };
 
-    function handleDragEnd(event: DragEndEvent) {
-        const { active, over } = event
-        if (active && over && active.id !== over.id) {
-            setData((data) => {
-                const oldIndex = dataIds.indexOf(active.id)
-                const newIndex = dataIds.indexOf(over.id)
-                return arrayMove(data, oldIndex, newIndex)
-            })
-        }
-    }
+  const goPreviousPage = () => {
+    const newPage = state.page - 1;
+    setState((prev) => ({ ...prev, page: newPage }));
+    onPageChange(newPage);
+  };
 
-    return (
-        <Tabs defaultValue="all" className="flex w-full flex-col justify-start gap-6">
-            <div className="flex items-center justify-between px-4 lg:px-6">
-                <Label htmlFor="view-selector" className="sr-only">
-                    View
-                </Label>
-                <Select defaultValue="all">
-                    <SelectTrigger className="@4xl/main:hidden flex w-fit" id="view-selector">
-                        <SelectValue placeholder="Select a view" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Todos</SelectItem>
-                        <SelectItem value="sucess">Com sucesso</SelectItem>
-                        <SelectItem value="pending">Pendentes</SelectItem>
-                        <SelectItem value="review">Requerendo tratamento</SelectItem>
-                        <SelectItem value="unanswared">Sem resposta</SelectItem>
-                    </SelectContent>
-                </Select>
-                <TabsList className=" hidden">
-                    <TabsTrigger value="all">Todos</TabsTrigger>
-                    <TabsTrigger value="sucess" className="gap-1">
-                        Com sucesso
-                    </TabsTrigger>
-                    <TabsTrigger value="review">Requerendo tratamento</TabsTrigger>
-                    <TabsTrigger value="unanswared">Sem resposta</TabsTrigger>
-                    <TabsTrigger value="pending" className="gap-1">
-                        Pendentes
-                    </TabsTrigger>
-                </TabsList>
-                <div className="flex items-center gap-2">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <ColumnsIcon />
-                                <span className="hidden lg:inline">Configurar Colunas</span>
-                                <span className="lg:hidden">Columns</span>
-                                <ChevronDownIcon />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanHide()) // Only show columns that can be hidden
-                                .map((column) => (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                ))}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <Button className="hidden" variant="outline" size="sm">
-                        <PlusIcon />
-                        <span className="hidden lg:inline">Add Section</span>
-                    </Button>
-                </div>
-            </div>
-            <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-                <div className="overflow-hidden rounded-lg border">
-                    <DndContext
-                        collisionDetection={closestCenter}
-                        modifiers={[restrictToVerticalAxis]}
-                        onDragEnd={handleDragEnd}
-                        sensors={sensors}
-                        id={sortableId}
+  const goFirstPage = () => {
+    setState((prev) => ({ ...prev, page: 0 }));
+    onPageChange(0);
+  };
+
+  const goLastPage = () => {
+    const lastPage = Math.floor(pagination.total / state.size);
+    setState((prev) => ({ ...prev, page: lastPage }));
+    onPageChange(lastPage);
+  };
+
+  const canGoNextPage = () => {
+    return (state.page + 1) * state.size < pagination.total;
+  };
+
+  const canGoPreviousPage = () => {
+    return state.page > 0;
+  };
+
+  const handlePageSizeChange = (value: string) => {
+    const newSize = Number(value);
+    setState((prev) => ({ ...prev, size: newSize, page: 0 }));
+    onPageSizeChange(newSize);
+    onPageChange(0);
+  };
+
+  const handleColumnChange = (columnKey: string, checked: boolean) => {
+    const newColumns = checked
+      ? [...state.columns, columnKey]
+      : state.columns.filter((c) => c !== columnKey);
+    setState((prev) => ({ ...prev, columns: newColumns }));
+    onColumnsChange(newColumns);
+  };
+
+  return (
+    <div className="@container/main flex flex-1 flex-col gap-2">
+      <div className="flex items-center py-4">
+        { onFilterChange && (
+          <FilterForm onSearch={ onFilterChange }/>
+        ) }
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Colunas <ChevronDown/>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            { columns.map((column) => (
+              <DropdownMenuCheckboxItem
+                key={ column.key }
+                className="cursor-pointer"
+                checked={ state.columns.includes(column.key) }
+                onCheckedChange={ (value) => handleColumnChange(column.key, value) }
+              >
+                { column.name }
+              </DropdownMenuCheckboxItem>
+            )) }
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <div className={ `flex flex-col gap-4 md:gap-6 md:pt-3 overflow-y-auto ${ height }` }>
+        <Table>
+          <TableHeader className={ "sticky top-0 bg-white z-10" }>
+            <TableRow>
+              { columns.filter(column => state.columns.includes(column.key)).map((column, index) => (
+                <TableHead key={ column.key } className="cursor-pointer">
+                  {
+                    column.formatHeader ? column.formatHeader(column.name) : column.name
+                  }
+                </TableHead>
+              )) }
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            { isLoading ? (
+              Array.from({ length: state.size }).map((_, index) => (
+                <TableRow key={ index } className="bg-white">
+                  { columns.map((column) => (
+                    <TableCell
+                      key={ column.key }
+                      className={ `py-3 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
                     >
-                        <Table>
-                            <TableHeader className="sticky top-0 z-10 bg-muted">
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <TableRow key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => (
-                                            <TableHead key={header.id} colSpan={header.colSpan}>
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(header.column.columnDef.header, header.getContext())}
-                                            </TableHead>
-                                        ))}
-                                    </TableRow>
-                                ))}
-                            </TableHeader>
-                            <TableBody className="**:data-[slot=table-cell]:first:w-8">
-                                {table.getRowModel().rows?.length ? (
-                                    <SortableContext items={dataIds} strategy={verticalListSortingStrategy}>
-                                        {table.getRowModel().rows.map((row) => (
-                                            <DraggableRow key={row.id} row={row} />
-                                        ))}
-                                    </SortableContext>
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={columns.length} className="h-24 text-center">
-                                            No results.
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </DndContext>
-                </div>
-                <div className="flex items-center justify-between px-4">
-                    <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
-                        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
-                    </div>
-                    <div className="flex w-full items-center gap-8 lg:w-fit">
-                        <div className="hidden items-center gap-2 lg:flex">
-                            <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                                Linhas por página
-                            </Label>
-                            <Select
-                                value={`${table.getState().pagination.pageSize}`}
-                                onValueChange={(value) => {
-                                    table.setPageSize(Number(value))
-                                }}
-                            >
-                                <SelectTrigger className="w-20" id="rows-per-page">
-                                    <SelectValue placeholder={table.getState().pagination.pageSize} />
-                                </SelectTrigger>
-                                <SelectContent side="top">
-                                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                                        <SelectItem key={pageSize} value={`${pageSize}`}>
-                                            {pageSize}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className="flex w-fit items-center justify-center text-sm font-medium">
-                            Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-                        </div>
-                        <div className="ml-auto flex items-center gap-2 lg:ml-0">
-                            <Button
-                                variant="outline"
-                                className="hidden h-8 w-8 p-0 lg:flex"
-                                onClick={() => table.setPageIndex(0)}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                <span className="sr-only">Ir para a primeira página</span>
-                                <ChevronsLeftIcon />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                className="size-8"
-                                size="icon"
-                                onClick={() => table.previousPage()}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                <span className="sr-only">Ir para a página anterior</span>
-                                <ChevronLeftIcon />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                className="size-8"
-                                size="icon"
-                                onClick={() => table.nextPage()}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                <span className="sr-only">Ir para a próxima página</span>
-                                <ChevronRightIcon />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                className="hidden size-8 lg:flex"
-                                size="icon"
-                                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                <span className="sr-only">Ir para a última página</span>
-                                <ChevronsRightIcon />
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </TabsContent>
-            {/* Repetir TabsContent para "sucess", "review", "unanswared", "pending" com a mesma lógica */}
-            {/* Para evitar duplicação, apenas a aba "all" está incluída aqui. Você pode replicar a lógica para as outras abas. */}
-        </Tabs>
-    )
+                      <Skeleton className="w-20 h-5"/>
+                    </TableCell>
+                  )) }
+                </TableRow>
+              ))
+            ) : (
+              data.map((item) => (
+                <TableRow key={ item.id }>
+                  { columns.map((column) => (
+                    <TableCell
+                      key={ column.key }
+                      className={ `h-14 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
+                    >
+                      {
+                        column.formatData ? column.formatData(item[column.key]) : item[column.key]
+                      }
+                    </TableCell>
+                  )) }
+                </TableRow>
+              ))
+            ) }
+          </TableBody>
+        </Table>
+        <div className="bg-transparent flex justify-between w-full">
+          <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground">
+                            { pagination.size } resultados
+                        </span>
+            <span className="text-sm text-muted-foreground">
+                            Página { pagination.page } de { Math.ceil(pagination.total / pagination.size) || 1 }
+                        </span>
+          </div>
+          <div className="flex gap-3">
+            <div className="hidden items-center gap-2 lg:flex">
+              <Label htmlFor="rows-per-page" className="text-sm font-medium">
+                Linhas por página
+              </Label>
+              <Select
+                value={ `${ state.size }` }
+                onValueChange={ handlePageSizeChange }
+              >
+                <SelectTrigger className="w-20" id="rows-per-page">
+                  <SelectValue placeholder={ state.size }/>
+                </SelectTrigger>
+                <SelectContent side="top">
+                  { [10, 15, 20, 30, 40, 50].map((pageSize) => (
+                    <SelectItem key={ pageSize } value={ `${ pageSize }` }>
+                      { pageSize }
+                    </SelectItem>
+                  )) }
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="ml-auto py-3 flex items-center gap-2 lg:ml-0">
+              <Button
+                variant="outline"
+                className="hidden h-8 w-8 p-0 lg:flex"
+                onClick={ goFirstPage }
+              >
+                <span className="sr-only">Ir para a primeira página</span>
+                <ChevronsLeftIcon/>
+              </Button>
+              <Button
+                variant="outline"
+                className="size-8"
+                size="icon"
+                disabled={ !canGoPreviousPage() }
+                onClick={ goPreviousPage }
+              >
+                <span className="sr-only">Ir para a página anterior</span>
+                <ChevronLeftIcon/>
+              </Button>
+              <Button
+                variant="outline"
+                className="size-8"
+                size="icon"
+                disabled={ !canGoNextPage() }
+                onClick={ goNextPage }
+              >
+                <span className="sr-only">Ir para a próxima página</span>
+                <ChevronRightIcon/>
+              </Button>
+              <Button
+                variant="outline"
+                className="hidden size-8 lg:flex"
+                size="icon"
+                onClick={ goLastPage }
+              >
+                <span className="sr-only">Ir para a última página</span>
+                <ChevronsRightIcon/>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
