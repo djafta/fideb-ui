@@ -72,8 +72,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<"form">
             </div>
             <div className={ cn("opacity-0 flex flex-col items-center gap-2 text-center", signIn.isError && "opacity-100") }>
                 <p className="text-destructive text-sm">
-                    Erro ao entrar. Por gentileza, confirme seus dados ou entre em contato com o departamento de informática.
-                </p>
+                  Nome de usuário ou palavra passe digitados, incorretos. Tente digitá-los novamente ou se o problema persistir, contacte o Departamento de Informática</p>
             </div>
         </form>
     )
