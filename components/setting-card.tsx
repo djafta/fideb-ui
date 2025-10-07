@@ -15,6 +15,23 @@ interface SettingCardProps {
   isEditable?: boolean
 }
 
+const labelsPT: { [key: string]: string } = {
+  "transfer-commission-percentage": "Percentagem da comissão de transferência",
+  "stamp-duty-percentage": "Percentagem do Imposto de Selo",
+  "mrf-bank-code": "Código MRF do banco",
+  "scan-proposals-cron-expression": "Periodicidade de execução da varredura de propostas",
+  "scan-disbursed-credits-cron-expression": "Periodicidade de execução da varredura de créditos desembolsados",
+  "scan-cancellations-cron-expression": "Periodicidade de execução de cancelamento de fixações",
+  "scan-invalid-discounts-cron-expression": "Periodicidade de varredura de descontos inválidos",
+  "outgoing-host": "IP do servidor de envio de emails",
+  "outgoing-port": "Porta do servidor de envio de emails",
+  "outgoing-username": "Utilizador do servidor de envio de emails",
+  "outgoing-password": "Palavra passe do utilizador de envio de emails",
+  "outgoing-from": "Conta de envio de emails",
+  "head-quarter-branch-code": "Código do balcão sede",
+  "system-name": "Nome ou IP do sistema do core bancário"
+};
+
 export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCardProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editedSetting, setEditedSetting] = useState<Setting>({
@@ -50,13 +67,13 @@ export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCar
           <div className="space-y-1 flex-1">
             { isEditing ? (
               <Input
-                value={ editedSetting.name }
+                value={ labelsPT[editedSetting.name] || editedSetting.name }
                 onChange={ (e) => handleInputChange("name", e.target.value) }
                 className="font-semibold text-lg"
                 placeholder="Nome da configuração"
               />
             ) : (
-              <CardTitle className="text-lg">{ setting.name }</CardTitle>
+              <CardTitle className="text-lg">{ labelsPT[setting.name] || setting.name }</CardTitle>
             ) }
 
             { isEditing ? (
