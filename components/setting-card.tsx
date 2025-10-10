@@ -29,7 +29,11 @@ const labelsPT: { [key: string]: string } = {
   "outgoing-password": "Palavra passe do utilizador de envio de emails",
   "outgoing-from": "Conta de envio de emails",
   "head-quarter-branch-code": "Código do balcão sede",
-  "system-name": "Nome ou IP do sistema do core bancário"
+  "system-name": "Nome ou IP do sistema do core bancário",
+  "transaction-code": "Código de transação",
+  "outgoing-star-tls": "Ativar TLS para envio de emails",
+  "outgoing-star-ssl": "Ativar SSL para envio de emails",
+  "outgoing-auth": "O servidor de envio requer autenticação"
 };
 
 export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCardProps) {
