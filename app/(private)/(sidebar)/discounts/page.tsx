@@ -188,7 +188,7 @@ const situationColumn = {
 export default function Page() {
   const [state, setState] = useState({
     page: 0,
-    size: 15,
+    size: 20,
     columns: [...columns.map((column) => column.key)]
   });
 
