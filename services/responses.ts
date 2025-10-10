@@ -18,9 +18,11 @@ export type Responses = {
         manager: string | null;
         branch: string | null;
       };
-      status: string;
       operation: string;
       businessCode: string; // UUID
+    },
+    payload:{
+      status: string;
     }
   }[];
   pagination: {
