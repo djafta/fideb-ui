@@ -17,10 +17,10 @@ function getMonthTrending(currentMonthSeries?: Omit<DiscountSeries, "createdAt">
   let unanswered = 0;
 
   if (currentMonthSeries && lastMonthSeries) {
-    pending = Math.round((currentMonthSeries.pending - lastMonthSeries.pending) / lastMonthSeries.pending * 100);
-    pendingAction = Math.round((currentMonthSeries.pendingAction - lastMonthSeries.pendingAction) / lastMonthSeries.pendingAction * 100);
-    success = Math.round((currentMonthSeries.success - lastMonthSeries.success) / lastMonthSeries.success * 100);
-    unanswered = Math.round((currentMonthSeries.unanswered - lastMonthSeries.unanswered) / lastMonthSeries.unanswered * 100);
+    pending = Math.round((currentMonthSeries.pending - lastMonthSeries.pending) / lastMonthSeries.pending * 100) || 0;
+    pendingAction = Math.round((currentMonthSeries.pendingAction - lastMonthSeries.pendingAction) / lastMonthSeries.pendingAction * 100) || 0;
+    success = Math.round((currentMonthSeries.success - lastMonthSeries.success) / lastMonthSeries.success * 100) || 0;
+    unanswered = Math.round((currentMonthSeries.unanswered - lastMonthSeries.unanswered) / lastMonthSeries.unanswered * 100) || 0;
   }
 
   return {
@@ -154,7 +154,7 @@ export function SectionCards() {
               <div className="absolute right-4 top-4">
                 <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
                   {
-                    monthTrending.unanswered < 0 ?
+                    monthTrending.unanswered <= 0 ?
                       <TrendingDownIcon className={ "size-3" }/> :
                       <TrendingUpIcon className="size-3"/>
                   }
@@ -165,7 +165,7 @@ export function SectionCards() {
             <CardFooter className="flex-col items-start gap-1 text-sm">
               <div className="line-clamp-1 flex gap-2 font-medium">
                 Tendências do mês {
-                monthTrending.unanswered < 0 ?
+                monthTrending.unanswered <= 0 ?
                   <TrendingDownIcon className={ "size-4" }/> :
                   <TrendingUpIcon className="size-4"/>
               }
