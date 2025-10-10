@@ -239,7 +239,7 @@ export default function Page() {
             id: response.request.businessCode + index,
             operation: response.request.operation,
             businessCode: response.request.businessCode,
-            status: response.payload.status,
+            status: response.payload?.status,
             actions: response
           })) }
           pagination={ pagination }
