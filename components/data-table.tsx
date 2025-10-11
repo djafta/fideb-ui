@@ -162,8 +162,8 @@ export function DataTable({
                 </TableRow>
               ))
             ) : (
-              data.map((item) => (
-                <TableRow key={ item.id }>
+              data.map((item, index) => (
+                <TableRow key={ `${ item.id }-${ index }` }>
                   { columns.map((column) => (
                     <TableCell
                       key={ column.key }
