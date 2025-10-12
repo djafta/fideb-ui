@@ -59,3 +59,10 @@ export function updateDiscount(reference: number, discount: Discount) {
     discount
   })
 }
+
+export function getDiscountEvents(reference: number) {
+  return api.get(`/discounts/${ reference }/timeline`).then((response) => {
+    console.log(response.data)
+    return response.data;
+  })
+}

@@ -10,8 +10,6 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     const body = await request.json();
 
-    console.log({ body })
-
     const response = await fetch(url, {
       method: "PUT",
       headers: {
