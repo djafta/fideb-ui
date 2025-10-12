@@ -2,6 +2,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useState } from "react";
+import { DiffModal } from "@/components/diff-modal";
+import { Button } from "@/components/ui/button";
 
 interface TimelineEvent {
   type: string
@@ -23,12 +26,17 @@ const operations: Record<string, string> = {
 }
 
 export function DiscountTimeline({ discountReference, events }: TimelineProps) {
+  const [diff, setDiff] = useState({
+    before: null,
+    after: null,
+  });
 
-  console.log({
-    events
-  })
   return (
     <div className="flex w-full flex-col gap-6">
+      <DiffModal open={ (!!diff.after || !!diff.before) } onClose={ () => setDiff({
+        after: null,
+        before: null,
+      }) } before={ diff.before } after={ diff.after }/>
       <Tabs defaultValue="all">
         <TabsList>
           <TabsTrigger value="all">Todos</TabsTrigger>
@@ -163,6 +171,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                     <TableHead className="w-48">Data e hora</TableHead>
                     <TableHead className={ "w-28" }>Utilizador</TableHead>
                     <TableHead>Descrição</TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -171,6 +180,15 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                       <TableCell>{ event.createdAt.toLocaleString() }</TableCell>
                       <TableCell>{ event.payload.username }</TableCell>
                       <TableCell>{ event.description }</TableCell>
+                      <TableCell><Button
+                        variant={ "link" }
+                        onClick={ () => {
+                          setDiff({
+                            before: event.payload.before,
+                            after: event.payload.after
+                          })
+                        } }
+                      >Ver detalhes</Button></TableCell>
                     </TableRow>
                   )) }
                 </TableBody>
