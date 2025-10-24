@@ -154,9 +154,9 @@ export function DataTable({
                   { columns.map((column) => (
                     <TableCell
                       key={ column.key }
-                      className={ `py-3 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
+                      className={ `py-1 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
                     >
-                      <Skeleton className="w-20 h-3"/>
+                      <Skeleton className="w-20 h-2"/>
                     </TableCell>
                   )) }
                 </TableRow>
