@@ -214,7 +214,7 @@ export default function Page() {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button className={"h-5 w-3"} variant="ghost">
               <EllipsisVertical/>
             </Button>
           </DropdownMenuTrigger>
