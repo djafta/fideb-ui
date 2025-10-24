@@ -10,9 +10,11 @@ export default function SignOutPage() {
   const router = useRouter();
 
   useEffect(() => {
-    signOut.mutate();
-    localStorage.removeItem("fideb-auth-token")
-  }, [signOut]);
+    if (!signOut.isPending) {
+      signOut.mutate();
+      localStorage.removeItem("fideb-auth-token")
+    }
+  }, [signOut.mutate, signOut.isPending]);
 
   if (signOut.isError || signOut.isSuccess) {
     setTimeout(() => {
