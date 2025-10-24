@@ -154,7 +154,7 @@ export function DataTable({
                   { columns.map((column) => (
                     <TableCell
                       key={ column.key }
-                      className={ `py-1 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
+                      className={ `py-2 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
                     >
                       <Skeleton className="w-20 h-2"/>
                     </TableCell>
@@ -167,7 +167,7 @@ export function DataTable({
                   { columns.map((column) => (
                     <TableCell
                       key={ column.key }
-                      className={ `h-10 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
+                      className={ `h-6 ${ !state.columns.includes(column.key) ? "hidden" : "" }` }
                     >
                       {
                         column.formatData ? column.formatData(item[column.key]) : item[column.key]
