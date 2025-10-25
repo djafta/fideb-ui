@@ -41,7 +41,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
         <TabsList>
           <TabsTrigger value="all">Todos</TabsTrigger>
           <TabsTrigger value="requests">Envios</TabsTrigger>
-          <TabsTrigger value="responses">Receções</TabsTrigger>
+          <TabsTrigger value="responses">Respostas</TabsTrigger>
           <TabsTrigger value="audits">Auditorias</TabsTrigger>
         </TabsList>
         <TabsContent value="all">
