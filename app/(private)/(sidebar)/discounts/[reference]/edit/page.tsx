@@ -77,13 +77,17 @@ export default function Page({ params }: { params: Promise<{ reference: string }
                       />
                     </div>
                   </div>
-                  <div className={ "flex gap-10" }>
-                    <Button onClick={ () => {
-                      mutation.mutate(payload)
-                    } }>Actualizar { mutation.isPending && <Spinner/> }</Button>
-                    <Button variant={ "destructive" } asChild><Link
-                      href={ `/discounts/${ reference }` }>Cancelar</Link></Button>
-                  </div>
+                  {
+                    (payload.situation == "PENDING_ACTION" || payload.situation == "FIXED") && (
+                      <div className={ "flex gap-10" }>
+                        <Button onClick={ () => {
+                          mutation.mutate(payload)
+                        } }>Actualizar { mutation.isPending && <Spinner/> }</Button>
+                        <Button variant={ "destructive" } asChild><Link
+                          href={ `/discounts/${ reference }` }>Cancelar</Link></Button>
+                      </div>
+                    )
+                  }
                 </div>
               </CardContent>
             </Card>
