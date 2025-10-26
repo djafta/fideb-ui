@@ -234,7 +234,7 @@ export default function Page() {
                   <DropdownMenuItem>
                     <Link className={ "flex items-center gap-2" }
                           href={ `${ process.env.NEXT_PUBLIC_APP_URL }/discounts/${ value.reference }/edit` }>
-                      <Pen/> Editar
+                      <Pen/> Actualizar
                     </Link>
                   </DropdownMenuItem>
                 </PrivateComponent>

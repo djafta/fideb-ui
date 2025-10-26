@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Discount } from "@/lib/types";
 import { MonthYearSelect } from "@/components/MonthYearSelect";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function Page({ params }: { params: Promise<{ reference: string }> }) {
   const { reference } = use(params);
@@ -21,6 +22,7 @@ export default function Page({ params }: { params: Promise<{ reference: string }
     mutationFn: (variables: Discount) => updateDiscount(Number(reference), variables),
     onSuccess: () => {
       refetch()
+      toast.success("Desconto actualizado com sucesso")
     }
   })
 
@@ -82,7 +84,7 @@ export default function Page({ params }: { params: Promise<{ reference: string }
                       <div className={ "flex gap-10" }>
                         <Button onClick={ () => {
                           mutation.mutate(payload)
-                        } }>Actualizar { mutation.isPending && <Spinner/> }</Button>
+                        } }>Salvar { mutation.isPending && <Spinner/> }</Button>
                         <Button variant={ "destructive" } asChild><Link
                           href={ `/discounts/${ reference }` }>Cancelar</Link></Button>
                       </div>
