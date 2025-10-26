@@ -95,6 +95,10 @@ export function FilterForm({ onSearch, excludeFilters }: FilterFormProps): JSX.E
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    clearAllFilters()
+  }, []);
+
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Element
 
@@ -169,8 +173,6 @@ export function FilterForm({ onSearch, excludeFilters }: FilterFormProps): JSX.E
   // Executar busca (simular request)
   const executeSearch = () => {
     const queryString = generateQueryString()
-    console.log("Query String gerada:", queryString)
-
     onSearch(queryString)
   }
 

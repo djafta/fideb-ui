@@ -1,6 +1,6 @@
 'use client'
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDiscounts } from "@/hooks/use-discounts";
 import { useSearchParams } from "next/navigation";
 import { DataTable } from "@/components/data-table";
@@ -204,7 +204,7 @@ export default function Page() {
     pagination,
     isLoading,
     refetch
-  } = useDiscounts(state.page * state.size, state.size, situation, query);
+  } = useDiscounts(state.page * state.size, state.size, situation, situation ? undefined : query);
 
   const actionsColumn = {
     name: "",
@@ -262,10 +262,15 @@ export default function Page() {
     }
   }
 
+  useEffect(() => {
+    setQuery("");
+  }, [situation]);
+
   return (
     <div className="@container/main flex flex-1 flex-col gap-2 px-6">
       <div className="flex flex-col bg-white w-full">
-        <h1 className="text-2xl font-semibold text-sidebar-primary">Descontos { situation && situations[situation.toUpperCase()] }</h1>
+        <h1
+          className="text-2xl font-semibold text-sidebar-primary">Descontos { situation && situations[situation.toUpperCase()] }</h1>
       </div>
       <div className="flex items-center">
         <DataTable
