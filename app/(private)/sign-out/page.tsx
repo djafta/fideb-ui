@@ -10,21 +10,23 @@ export default function SignOutPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!signOut.isPending) {
-      signOut.mutate();
-      localStorage.removeItem("fideb-auth-token")
-    }
-  }, [signOut.mutate, signOut.isPending]);
+    signOut.mutate();
+    localStorage.removeItem("fideb-auth-token");
+  }, []);
 
-  if (signOut.isError || signOut.isSuccess) {
-    setTimeout(() => {
-      router.push("/sign-in");
-    }, 5000)
-  }
+  useEffect(() => {
+    if (signOut.isError || signOut.isSuccess) {
+      const timer = setTimeout(() => {
+        router.push("/sign-in");
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [signOut.isError, signOut.isSuccess, router]);
 
   return (
     <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center">
       <Spinner/>
     </div>
-  )
+  );
 }
