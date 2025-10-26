@@ -89,13 +89,13 @@ const data = {
         },
         {
           title: "Pendentes",
-          url: "/discounts?situation=pending",
+          url: "/discounts?situation=pending_fixing,pending_update,pending_cancellation",
           roles
         },
       ],
     },
     {
-      title: "Definições",
+      title: "Configurações",
       url: "#",
       icon: Settings2,
       roles: ["FIDEB_ADM"],
