@@ -23,7 +23,7 @@ export default function AllSettings() {
     <div className="min-h-screen bg-background p-6">
       <div className="mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Configurações do Sistema</h1>
+          <h1 className="text-3xl font-bold mb-2 text-sidebar-primary">Configurações do Sistema</h1>
           <p className="text-muted-foreground">
             Gerencie as configurações da aplicação. Clique no ícone de edição para modificar os valores.
           </p>

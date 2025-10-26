@@ -228,7 +228,7 @@ export default function Page() {
   return (
     <div className="@container/main flex flex-1 flex-col gap-2 px-6">
       <div className="flex flex-col bg-white w-full">
-        <h1 className="text-2xl font-semibold">Respostas { situations[type.toLowerCase()] }</h1>
+        <h1 className="text-2xl font-semibold text-sidebar-primary">Respostas { situations[type.toLowerCase()] }</h1>
       </div>
       <div className="flex items-center">
         <DataTable
