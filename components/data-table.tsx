@@ -40,6 +40,7 @@ interface DataTableProps {
   onFilterChange?: (filter: string) => void;
   initialPageSize?: number;
   initialColumns?: string[];
+  excludeFilters?: string[];
 }
 
 export function DataTable({
@@ -53,7 +54,8 @@ export function DataTable({
                             onColumnsChange,
                             onFilterChange,
                             initialPageSize = 20,
-                            initialColumns
+                            initialColumns,
+                            excludeFilters
                           }: DataTableProps) {
   const [state, setState] = useState({
     page: 0,
@@ -112,7 +114,7 @@ export function DataTable({
     <div className="@container/main flex flex-1 flex-col gap-2">
       <div className="flex items-center py-4">
         { onFilterChange && (
-          <FilterForm onSearch={ onFilterChange }/>
+          <FilterForm excludeFilters={ excludeFilters } onSearch={ onFilterChange }/>
         ) }
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

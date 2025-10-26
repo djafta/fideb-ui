@@ -214,7 +214,7 @@ export default function Page() {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className={"h-5 w-3"} variant="ghost">
+            <Button className={ "h-5 w-3" } variant="ghost">
               <EllipsisVertical/>
             </Button>
           </DropdownMenuTrigger>
@@ -293,9 +293,14 @@ export default function Page() {
               }))
             }
           }
-          onFilterChange={ !situation ? (filter) => {
-            setQuery(filter);
-          } : undefined }
+          excludeFilters={ [situation && "situation"] }
+          onFilterChange={ (filter) => {
+            if (situation) {
+              setQuery(`${ filter }&situation=${ situation }`);
+            } else {
+              setQuery(filter);
+            }
+          } }
           onColumnsChange={ (columns) => {
             setState((prevState) => ({
               ...prevState,

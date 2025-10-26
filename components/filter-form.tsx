@@ -82,9 +82,10 @@ interface FilterItem {
 
 type FilterFormProps = {
   onSearch: (value: string) => void
+  excludeFilters?: string[]
 }
 
-export function FilterForm({ onSearch }: FilterFormProps): JSX.Element {
+export function FilterForm({ onSearch, excludeFilters }: FilterFormProps): JSX.Element {
   const [searchValue, setSearchValue] = useState("")
   const [showFilters, setShowFilters] = useState(false)
   const [filters, setFilters] = useState<FilterItem[]>([])
@@ -241,7 +242,7 @@ export function FilterForm({ onSearch }: FilterFormProps): JSX.Element {
                     <SelectValue placeholder="Selecione um campo"/>
                   </SelectTrigger>
                   <SelectContent>
-                    { AVAILABLE_FIELDS.map((field) => (
+                    { AVAILABLE_FIELDS.filter(f => !excludeFilters?.includes(f.key)).map((field) => (
                       <SelectItem key={ field.key } value={ field.key }>
                         { field.label }
                       </SelectItem>
