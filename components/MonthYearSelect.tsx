@@ -29,7 +29,7 @@ export function MonthYearSelect({ className, value, onValueChange }: MonthYearSe
   return (
     <div className={ `flex gap-2 ${ className || "" }` }>
       <Select value={ value.getMonth().toString() }
-              onValueChange={ (v) => onValueChange(new Date(`${ value.getFullYear() }-${ Number(v) + 1 }-${ value.getDate() }`)) }>
+              onValueChange={ (v) => onValueChange(new Date(`${ value.getFullYear() < referenceDate.getFullYear() ? referenceDate.getFullYear() : value.getFullYear() }-${ Number(v) + 1 }-${ value.getDate() }`)) }>
         <SelectTrigger className="w-[140px]">
           <SelectValue placeholder="Select month"/>
         </SelectTrigger>
