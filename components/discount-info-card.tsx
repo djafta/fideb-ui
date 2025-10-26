@@ -26,11 +26,16 @@ interface DiscountInfoCardProps {
 
 const situations: { [key: string]: string } = {
   "PENDING_ACTION": "Rejeitado",
+  "PENDING_FIXING": "Pendente de fixação",
+  "PENDING_CANCELLATION": "Pendente de cancelamento",
+  "PENDING_UPDATE": "Pendente de actualização",
   "FIXED": "Fixado",
   "CANCELLED": "Cancelado",
-  "NOT_FIXED": "Não Fixado",
-  "NOT_CANCELED": "Não Cancelado",
-  "NOT_UPDATED": "Não Atualizado",
+  "NOT_FIXED": "Para fixação",
+  "NOT_CANCELED": "Para cancelamento",
+  "NOT_UPDATED": "Para actualização",
+  "PENDING": "Pendente",
+  "INVALID": "Inválido",
 }
 
 export function DiscountInfoCard({ discountInfo }: DiscountInfoCardProps) {

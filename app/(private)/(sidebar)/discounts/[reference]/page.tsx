@@ -10,6 +10,7 @@ export default function HomePage({ params }: { params: Promise<{ reference: stri
   const discount = useDiscount(Number(reference));
   const events = useDiscountEvents(Number(reference));
 
+  console.log(events)
 
   return (
     <main className="min-h-screen bg-background px-6 py-4 flex flex-col space-y-10">
