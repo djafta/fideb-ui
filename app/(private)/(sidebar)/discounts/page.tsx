@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDiscounts } from "@/hooks/use-discounts";
 import { useSearchParams } from "next/navigation";
 import { DataTable } from "@/components/data-table";
-import { formatMonthYear, formatNumber } from "@/lib/utils";
+import { cn, formatMonthYear, formatNumber } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Discount } from "@/lib/types";
 import {
@@ -176,7 +176,8 @@ const situationColumn = {
       "INVALID": "Inválido",
     }
     return (
-      <Badge variant={ value === "PENDING_ACTION" ? "destructive" : "outline" } className={ "text-right" }>
+      <Badge variant={ value === "PENDING_ACTION" ? "destructive" : "outline" }
+             className={ cn("text-right", { "text-sidebar-primary": value !== "PENDING_ACTION" }) }>
         {
           situations[value.trim().toUpperCase()]
         }

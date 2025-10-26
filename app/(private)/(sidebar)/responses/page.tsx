@@ -41,7 +41,7 @@ const columns = [
       });
 
       return (
-        <Badge variant="outline">
+        <Badge variant="outline" className={"text-sidebar-primary"}>
           { formatted }
         </Badge>
       );

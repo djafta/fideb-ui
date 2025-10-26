@@ -169,7 +169,7 @@ export function DataTable({
                   { columns.map((column) => (
                     <TableCell
                       key={ column.key }
-                      className={ `${ !state.columns.includes(column.key) ? "hidden" : "" }` }
+                      className={ `${ !state.columns.includes(column.key) ? "hidden" : "text-sidebar-primary" }` }
                     >
                       {
                         column.formatData ? column.formatData(item[column.key]) : item[column.key]
