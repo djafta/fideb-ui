@@ -53,7 +53,7 @@ export function DiffModal({ open, onClose, before, after, title = "Detalhes do e
   const diff = getDiff(before, after)
 
   return (
-    <Dialog modal={true} open={ open } onOpenChange={ onClose }>
+    <Dialog modal={ true } open={ open } onOpenChange={ onClose }>
       <DialogContent className="p-0 !w-full !max-w-3xl">
         <DialogHeader className="px-6 pt-6 pb-2">
           <DialogTitle className="text-xl font-semibold">{ title }</DialogTitle>
@@ -91,8 +91,22 @@ export function DiffModal({ open, onClose, before, after, title = "Detalhes do e
   )
 }
 
+const situations: { [key: string]: string } = {
+  "PENDING_ACTION": "Rejeitado",
+  "PENDING_FIXING": "Por fixar",
+  "PENDING_CANCELLATION": "Por cancelar",
+  "PENDING_UPDATE": "Por actualizar",
+  "FIXED": "Fixado",
+  "CANCELLED": "Cancelado",
+  "NOT_FIXED": "Não fixado",
+  "NOT_CANCELED": "Não cancelado",
+  "NOT_UPDATED": "Não atualizado",
+  "PENDING": "Pendente",
+  "INVALID": "Inválido",
+}
+
 function formatValue(value: any) {
   if (value === undefined || value === null) return "—"
   if (typeof value === "object") return JSON.stringify(value, null, 2)
-  return String(value)
+  return situations[value] || value.toString()
 }
