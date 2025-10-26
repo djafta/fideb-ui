@@ -23,7 +23,7 @@ export default function SignOutPage() {
 
       return () => clearTimeout(timer);
     }
-  }, [signOut.isError, signOut.isSuccess, router]);
+  }, [signOut, router]);
 
   return (
     <div className="fixed left-0 top-0 w-full h-full flex items-center justify-center">
