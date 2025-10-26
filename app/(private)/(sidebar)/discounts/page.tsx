@@ -204,7 +204,7 @@ export default function Page() {
     pagination,
     isLoading,
     refetch
-  } = useDiscounts(state.page * state.size, state.size, situation, situation ? undefined : query);
+  } = useDiscounts(state.page * state.size, state.size, situation, query);
 
   const actionsColumn = {
     name: "",
