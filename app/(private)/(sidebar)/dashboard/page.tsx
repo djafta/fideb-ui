@@ -145,7 +145,7 @@ const columns = [
     key: "situation",
     formatData: (value: string) => {
       return (
-        <Badge variant={ 'outline' }>
+        <Badge variant={ 'outline' } className={"text-sidebar-primary"}>
           { situations[value] }
         </Badge>
       )
