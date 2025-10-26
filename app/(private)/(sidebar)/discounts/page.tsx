@@ -229,18 +229,6 @@ export default function Page() {
               </Link>
             </DropdownMenuItem>
             {
-              (value.situation === "FIXED" || value.situation == "PENDING_ACTION" && value.fixedAt !== null) && (
-                <PrivateComponent roles={ ["FIDEB_ACT"] }>
-                  <DropdownMenuItem>
-                    <Link className={ "flex items-center gap-2" }
-                          href={ `${ process.env.NEXT_PUBLIC_APP_URL }/discounts/${ value.reference }/edit` }>
-                      <Pen/> Actualizar
-                    </Link>
-                  </DropdownMenuItem>
-                </PrivateComponent>
-              )
-            }
-            {
               value.situation === "PENDING_ACTION" && (
                 <PrivateComponent roles={ ["FIDEB_PEN"] }>
                   <DropdownMenuItem onClick={ () => {
@@ -252,7 +240,19 @@ export default function Page() {
                       .finally(() => {
                         setLoadingDiscounts((prevState) => prevState.filter((discountReference) => discountReference !== value.reference))
                       })
-                  } }><Send/> Reenviar</DropdownMenuItem>
+                  } }><Send/> Ordenar reenvio</DropdownMenuItem>
+                </PrivateComponent>
+              )
+            }
+            {
+              (value.situation === "FIXED" || value.situation == "PENDING_ACTION" && value.fixedAt !== null) && (
+                <PrivateComponent roles={ ["FIDEB_ACT"] }>
+                  <DropdownMenuItem>
+                    <Link className={ "flex items-center gap-2" }
+                          href={ `${ process.env.NEXT_PUBLIC_APP_URL }/discounts/${ value.reference }/edit` }>
+                      <Pen/> Actualizar desconto
+                    </Link>
+                  </DropdownMenuItem>
                 </PrivateComponent>
               )
             }
