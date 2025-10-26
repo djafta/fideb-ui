@@ -23,44 +23,44 @@ const AVAILABLE_FIELDS = [
   {
     key: "situation", label: "Situação", type: "select", options: [
       {
-        "name": "Rejeitado",
-        "value": "PENDING_ACTION"
-      },
-      {
-        "name": "Pendente de fixação",
-        "value": "PENDING_FIXING"
-      },
-      {
-        "name": "Pendente de cancelamento",
-        "value": "PENDING_CANCELLATION"
-      },
-      {
-        "name": "Pendente de actualização",
-        "value": "PENDING_UPDATE"
-      },
-      {
         "name": "Fixado",
         "value": "FIXED"
       },
       {
-        "name": "Cancelado",
-        "value": "CANCELLED"
+        "name": "Rejeitado",
+        "value": "PENDING_ACTION"
       },
       {
-        "name": "Para fixação",
+        "name": "Pendente de Tratamento",
+        "value": "PENDING"
+      },
+      {
+        "name": "Pendente de Fixação",
+        "value": "PENDING_FIXING"
+      },
+      {
+        "name": "Pendente de Actualização",
+        "value": "PENDING_UPDATE"
+      },
+      {
+        "name": "Pendente de Cancelamento",
+        "value": "PENDING_CANCELLATION"
+      },
+      {
+        "name": "Para Fixação",
         "value": "NOT_FIXED"
       },
       {
-        "name": "Para cancelamento",
-        "value": "NOT_CANCELED"
-      },
-      {
-        "name": "Para actualização",
+        "name": "Para Actualização",
         "value": "NOT_UPDATED"
       },
       {
-        "name": "Pendente",
-        "value": "PENDING"
+        "name": "Para Cancelamento",
+        "value": "NOT_CANCELED"
+      },
+      {
+        "name": "Cancelado",
+        "value": "CANCELLED"
       },
       {
         "name": "Inválido",
