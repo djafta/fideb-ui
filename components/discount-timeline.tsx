@@ -25,6 +25,19 @@ const operations: Record<string, string> = {
   U: "Atualização"
 }
 
+function formatDate(date: string | Date) {
+  return new Date(date).toLocaleString("pt-MZ", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    fractionalSecondDigits: 3,
+    hour12: false
+  })
+}
+
 export function DiscountTimeline({ discountReference, events }: TimelineProps) {
   const [diff, setDiff] = useState({
     before: null,
@@ -64,7 +77,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                 <TableBody>
                   { events?.map((event, index) => (
                     <TableRow key={ index }>
-                      <TableCell>{ event.createdAt.toLocaleString() }</TableCell>
+                      <TableCell>{ formatDate(event.createdAt) }</TableCell>
                       <TableCell>{ event.type }</TableCell>
                       <TableCell>{ event.description }</TableCell>
                     </TableRow>
@@ -99,7 +112,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                 <TableBody>
                   { events?.filter(event => event.type === "Envio").map((event, index) => (
                     <TableRow key={ event.id + index }>
-                      <TableCell>{ event.createdAt.toLocaleString() }</TableCell>
+                      <TableCell>{ formatDate(event.createdAt) }</TableCell>
                       <TableCell>{ operations[event.payload.operation] }</TableCell>
                       <TableCell>{ event.payload.businessCode }</TableCell>
                       <TableCell>{ event.payload.discount.nuit }</TableCell>
@@ -140,7 +153,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                 <TableBody>
                   { events?.filter(event => event.type === "Resposta").map((event, index) => (
                     <TableRow key={ event.id + index }>
-                      <TableCell>{ event.createdAt.toLocaleString() }</TableCell>
+                      <TableCell>{ formatDate(event.createdAt) }</TableCell>
                       <TableCell>{ operations[event.payload.request.operation] }</TableCell>
                       <TableCell>{ event.payload.request.businessCode }</TableCell>
                       <TableCell>{ event.payload.request.discount.nuit }</TableCell>
@@ -177,7 +190,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                 <TableBody>
                   { events?.filter(event => event.type === "Auditoria").map((event, index) => (
                     <TableRow key={ event.id + index }>
-                      <TableCell>{ event.createdAt.toLocaleString() }</TableCell>
+                      <TableCell>{ formatDate(event.createdAt) }</TableCell>
                       <TableCell>{ event.payload.username }</TableCell>
                       <TableCell>{ event.description }</TableCell>
                       <TableCell><Button
