@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
   const nuit = searchParams.get("nuit");
   const client = searchParams.get("client");
   const reference = searchParams.get("reference");
+  const lastStatus = searchParams.get("lastStatus");
 
   const url = new URL(`${ process.env.FIDEB_API_URL }/discounts`);
 
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
   if (skip) url.searchParams.set("skip", skip);
   if (take) url.searchParams.set("take", take);
   if (reference) url.searchParams.set("reference", reference);
+  if (lastStatus) url.searchParams.set("lastStatus", lastStatus);
 
   const authorization = await getBearerToken();
 
