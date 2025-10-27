@@ -31,10 +31,6 @@ const AVAILABLE_FIELDS = [
         "value": "PENDING_ACTION"
       },
       {
-        "name": "Pendente de Tratamento",
-        "value": "PENDING"
-      },
-      {
         "name": "Pendente de Fixação",
         "value": "PENDING_FIXING"
       },
@@ -61,10 +57,6 @@ const AVAILABLE_FIELDS = [
       {
         "name": "Cancelado",
         "value": "CANCELLED"
-      },
-      {
-        "name": "Inválido",
-        "value": "INVALID"
       }
     ]
   },
