@@ -37,6 +37,7 @@ const columns = [
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
+        fractionalSecondDigits: 3,
         hour12: false
       });
 
@@ -219,7 +220,7 @@ export default function Page() {
       </div>
     ),
     formatData: (value: string) => (
-      <Badge variant={ "outline" }>
+      <Badge variant={ "outline" } className={ "text-sidebar-primary" }>
         { value }
       </Badge>
     )
