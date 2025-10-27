@@ -10,25 +10,25 @@ import { formatInt } from "@/lib/utils";
 import { useSeries } from "@/hooks/use-series";
 import { DiscountSeries } from "@/services/series";
 
-function getMonthTrending(currentMonthSeries?: Omit<DiscountSeries, "createdAt">, lastMonthSeries?: Omit<DiscountSeries, "createdAt">) {
-  let pending = 0;
-  let pendingAction = 0;
-  let success = 0;
-  let unanswered = 0;
+function getMonthTrending(
+  currentMonthSeries?: Omit<DiscountSeries, "createdAt">,
+  lastMonthSeries?: Omit<DiscountSeries, "createdAt">
+) {
+  const calcChange = (current?: number, last?: number): number => {
+    if (typeof current !== "number" || typeof last !== "number" || last === 0) {
+      return 0;
+    }
 
-  if (currentMonthSeries && lastMonthSeries) {
-    pending = Math.round((currentMonthSeries.pending - lastMonthSeries.pending) / lastMonthSeries.pending * 100) || 0;
-    pendingAction = Math.round((currentMonthSeries.pendingAction - lastMonthSeries.pendingAction) / lastMonthSeries.pendingAction * 100) || 0;
-    success = Math.round((currentMonthSeries.success - lastMonthSeries.success) / lastMonthSeries.success * 100) || 0;
-    unanswered = Math.round((currentMonthSeries.unanswered - lastMonthSeries.unanswered) / lastMonthSeries.unanswered * 100) || 0;
-  }
+    const change = ((current - last) / last) * 100;
+    return Number.isFinite(change) ? Math.round(change) : 0;
+  };
 
   return {
-    pending,
-    pendingAction,
-    success,
-    unanswered,
-  }
+    pending: calcChange(currentMonthSeries?.pending, lastMonthSeries?.pending),
+    pendingAction: calcChange(currentMonthSeries?.pendingAction, lastMonthSeries?.pendingAction),
+    success: calcChange(currentMonthSeries?.success, lastMonthSeries?.success),
+    unanswered: calcChange(currentMonthSeries?.unanswered, lastMonthSeries?.unanswered),
+  };
 }
 
 export function SectionCards() {
@@ -149,7 +149,7 @@ export function SectionCards() {
             <CardHeader className="relative">
               <CardDescription>Sem resposta</CardDescription>
               <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                { formatInt(discountsStats.data?.unanswered ?? 0) }
+                { formatInt(discountsStats.data?.unanswered || 0) }
               </CardTitle>
               <div className="absolute right-4 top-4">
                 <Badge variant="outline" className="flex gap-1 rounded-lg text-xs">
