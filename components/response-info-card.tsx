@@ -88,7 +88,7 @@ export function ResponseInfoCard({ data }: ResponseInfoCardProps) {
           label: `${ status }`,
           variant: "secondary" as const,
           icon: AlertCircle,
-          color: "text-yellow-600",
+          color: "text-sidebar-primary",
         }
     }
   }
@@ -99,9 +99,9 @@ export function ResponseInfoCard({ data }: ResponseInfoCardProps) {
     <Card className="w-full">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-semibold"><span className={"text-yellow-600"}>Referência</span> #{ request.discount.reference }</CardTitle>
+          <CardTitle className="text-xl font-semibold"><span className={"text-sidebar-primary"}>Referência</span> #{ request.discount.reference }</CardTitle>
           <div
-            className={ "flex items-center gap-10 font-medium text-sm" + (statusCode === "100" ? " text-green-600" : " text-yellow-600") }>
+            className={ "flex items-center gap-10 font-medium text-sm" + (statusCode === "100" ? " text-green-600" : " text-sidebar-primary") }>
             <div className={"flex items-center gap-1" }>
               Operação:
               <Badge variant={ "outline" } className="flex items-center">
