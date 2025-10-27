@@ -32,7 +32,8 @@ const situations: { [key: string]: string } = {
   "NOT_UPDATED": "Não atualizados",
   "PENDING": "Pendentes",
   "INVALID": "Inválidos",
-  "PENDING_FIXING,PENDING_UPDATE,PENDING_CANCELLATION": "Pendentes",
+  "PENDING_FIXING,PENDING_UPDATE,PENDING_CANCELLATION": "Submetidos",
+  "300": "Pendentes",
 }
 
 const columns = [
@@ -199,12 +200,14 @@ export default function Page() {
   const [query, setQuery] = useState("");
   const searchParams = useSearchParams();
   const situation = searchParams.get("situation") as string;
+  const lastStatus = searchParams.get("lastStatus") as string;
+
   const {
     discounts,
     pagination,
     isLoading,
     refetch
-  } = useDiscounts(state.page * state.size, state.size, situation, query);
+  } = useDiscounts(state.page * state.size, state.size, situation, lastStatus ? `lastStatus=${ lastStatus }&${ query }` : query);
 
   const actionsColumn = {
     name: "",
@@ -270,7 +273,7 @@ export default function Page() {
     <div className="@container/main flex flex-1 flex-col gap-2 px-6">
       <div className="flex flex-col bg-white w-full">
         <h1
-          className="text-2xl font-semibold text-sidebar-primary">Descontos { situation && situations[situation.toUpperCase()] }</h1>
+          className="text-2xl font-semibold text-sidebar-primary">Descontos { situation ? situations[situation.toUpperCase()] : situations[lastStatus] }</h1>
       </div>
       <div className="flex items-center">
         <DataTable
