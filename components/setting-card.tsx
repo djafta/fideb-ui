@@ -33,7 +33,8 @@ const labelsPT: { [key: string]: string } = {
   "transaction-code": "Código de transação",
   "outgoing-star-tls": "Ativar TLS para envio de emails",
   "outgoing-star-ssl": "Ativar SSL para envio de emails",
-  "outgoing-auth": "O servidor de envio requer autenticação"
+  "outgoing-auth": "O servidor de envio requer autenticação",
+  "idle-time-out": "Tempo limite de inatividade (minutos)",
 };
 
 export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCardProps) {
