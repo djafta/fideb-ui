@@ -12,7 +12,7 @@ export default function SignInPage() {
   useEffect(() => {
     const token = localStorage.getItem("fideb-auth-token");
     if (token) {
-      router.push("/dashboard");
+      //router.push("/dashboard");
     }
   }, [router]);
 

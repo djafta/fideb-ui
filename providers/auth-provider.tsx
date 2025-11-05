@@ -27,7 +27,6 @@ export function AuthProvider({
 
   useEffect(() => {
     if (!isLoading && (isError || !user)) {
-      localStorage.removeItem("fideb-auth-token");
       router.push("/sign-in");
     }
   }, [isLoading, isError, user, router]);
