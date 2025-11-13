@@ -147,6 +147,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                     <TableHead>Valor</TableHead>
                     <TableHead>Data Início</TableHead>
                     <TableHead>Data Fim</TableHead>
+                    <TableHead>Estado</TableHead>
                     <TableHead>Motivo</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -161,6 +162,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
                       <TableCell>{ event.payload.request.discount.amount }</TableCell>
                       <TableCell>{ event.payload.request.discount.startDate }</TableCell>
                       <TableCell>{ event.payload.request.discount.endDate }</TableCell>
+                      <TableCell>{ event.payload.payload.status }</TableCell>
                       <TableCell>{ event.payload.payload.reason }</TableCell>
                     </TableRow>
                   )) }
