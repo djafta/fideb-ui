@@ -35,7 +35,7 @@ const labelsPT: { [key: string]: string } = {
   "outgoing-star-ssl": "Ativar SSL para envio de emails",
   "outgoing-auth": "O servidor de envio requer autenticação",
   "idle-time-out": "Tempo limite de inatividade (minutos)",
-  "proposals-bach-size": "Tamanho do lote de propostas para varredura",
+  "proposals-batch-size": "Tamanho do lote de propostas para varredura",
 };
 
 export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCardProps) {
