@@ -180,7 +180,7 @@ export function FilterForm({ onSearch, excludeFilters }: FilterFormProps): JSX.E
         <Input
           ref={ inputRef }
           type="text"
-          placeholder="Digite para buscar ou clique para filtrar..."
+          placeholder="Clique para filtrar..."
           value={ searchValue }
           onChange={ (e) => setSearchValue(e.target.value) }
           onFocus={ () => setShowFilters(true) }
