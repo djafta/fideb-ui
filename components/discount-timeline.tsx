@@ -62,7 +62,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
             <CardHeader>
               <CardTitle>Todos eventos</CardTitle>
               <CardDescription>
-                Veja todos os eventos ocorridos para o disconto { discountReference }
+                Veja todos os eventos ocorridos para o desconto { discountReference }
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
@@ -92,7 +92,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
             <CardHeader>
               <CardTitle>Envios</CardTitle>
               <CardDescription>
-                Veja todos os pedidos enviados ao CEDSIF para o disconto { discountReference }
+                Veja todos os pedidos enviados ao CEDSIF para o desconto { discountReference }
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
@@ -132,7 +132,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
             <CardHeader>
               <CardTitle>Respostas</CardTitle>
               <CardDescription>
-                Veja todas as respostas recebidas do CEDSIF para o disconto { discountReference }
+                Veja todas as respostas recebidas do CEDSIF para o desconto { discountReference }
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
@@ -176,7 +176,7 @@ export function DiscountTimeline({ discountReference, events }: TimelineProps) {
             <CardHeader>
               <CardTitle>Auditorias</CardTitle>
               <CardDescription>
-                Veja todos os eventos de alteração para o disconto { discountReference }
+                Veja todos os eventos de alteração para o desconto { discountReference }
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
