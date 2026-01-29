@@ -36,6 +36,7 @@ const labelsPT: { [key: string]: string } = {
   "outgoing-auth": "O servidor de envio requer autenticação",
   "idle-time-out": "Tempo limite de inatividade (minutos)",
   "proposals-batch-size": "Tamanho do lote de propostas para varredura",
+  "get-responses-delay-milliseconds": "Atraso entre obtenção de respostas (milissegundos)",
 };
 
 export function SettingCard({ setting, onUpdate, isEditable = true }: SettingCardProps) {
